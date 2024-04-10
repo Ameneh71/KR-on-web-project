@@ -1,0 +1,249 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://Ameneh.org/aircraft.owl"
+         xmlns="http://Ameneh.org/aircraft.owl#">
+
+<owl:Ontology rdf:about="http://Ameneh.org/aircraft.owl">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">This ontology has been creayed using the aircraft dataset existing in this link "https://people.rit.edu/fa3019/technical/aircraft.html"</rdfs:comment>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">the developer is Ameneh Naghdi Pour.Contact: a.nghdipour@vu.nl</rdfs:comment>
+</owl:Ontology>
+
+<owl:ObjectProperty rdf:about="#belongTo">
+  <rdfs:range rdf:resource="#Action"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasCause">
+  <owl:inverseOf rdf:resource="#leadTo"/>
+  <rdfs:domain rdf:resource="#Problem"/>
+  <rdfs:range rdf:resource="#Cause"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#leadTo">
+  <rdfs:domain rdf:resource="#Cause"/>
+  <rdfs:range rdf:resource="#Problem"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#involvedPart">
+  <rdfs:domain rdf:resource="#Event"/>
+  <rdfs:range rdf:resource="#Part"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#isUsed">
+  <owl:inverseOf rdf:resource="#requiredTool"/>
+  <rdfs:domain rdf:resource="#Tool"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#requiredTool">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+  <rdfs:range rdf:resource="#Tool"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#locatedIn">
+  <rdfs:domain rdf:resource="#Part"/>
+  <rdfs:range rdf:resource="#Component"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#requiredAction">
+  <rdfs:domain rdf:resource="#Problem"/>
+  <rdfs:range rdf:resource="#Action"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#resultIN">
+  <rdfs:domain rdf:resource="#Action"/>
+  <rdfs:range rdf:resource="#Outcome"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#resultIn">
+  <rdfs:domain rdf:resource="#Action"/>
+  <rdfs:range rdf:resource="#Outcome"/>
+</owl:ObjectProperty>
+
+<owl:DatatypeProperty rdf:about="#Ident">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Event"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#name">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Part"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+</owl:DatatypeProperty>
+
+<owl:Class rdf:about="#Action">
+  <rdfs:subClassOf rdf:resource="#Event"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#resultIn"/>
+      <owl:onClass rdf:resource="#Outcome"/>
+      <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <owl:disjointWith rdf:resource="#Problem"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Problem">
+  <rdfs:subClassOf rdf:resource="#Event"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#requiredAction"/>
+      <owl:onClass rdf:resource="#Action"/>
+      <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#Cause">
+  <rdfs:subClassOf rdf:resource="#Event"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Event">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#involvedPart"/>
+      <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#Part">
+  <rdfs:subClassOf rdf:resource="#Component"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Tool">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Component">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Outcome">
+  <rdfs:subClassOf rdf:resource="#Event"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Intake">
+  <rdfs:subClassOf rdf:resource="#Part"/>
+  <rdfs:seeAlso rdf:datatype="http://www.w3.org/2001/XMLSchema#string">https://www.flyaeroguard.com/learning-center/parts-of-an-airplane/#Intake</rdfs:seeAlso>
+</owl:Class>
+
+<owl:Class rdf:about="#PepairProcedure">
+  <rdfs:subClassOf rdf:resource="#Action"/>
+</owl:Class>
+
+<owl:Class rdf:about="#RockerCover">
+  <rdfs:subClassOf rdf:resource="#Part"/>
+  <rdfs:seeAlso rdf:datatype="http://www.w3.org/2001/XMLSchema#string">https://www.flyaeroguard.com/learning-center/parts-of-an-airplane/#RockerCover</rdfs:seeAlso>
+</owl:Class>
+
+<owl:Class rdf:about="#System">
+  <rdfs:subClassOf rdf:resource="#Component"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Baffle">
+  <rdfs:subClassOf rdf:resource="#Part"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Broken">
+  <rdfs:subClassOf rdf:resource="#Problem"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Crack">
+  <rdfs:subClassOf rdf:resource="#Problem"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Damaged">
+  <rdfs:subClassOf rdf:resource="#Problem"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Dirty">
+  <rdfs:subClassOf rdf:resource="#Problem"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Engine">
+  <rdfs:subClassOf rdf:resource="#Part"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Good">
+  <rdfs:subClassOf rdf:resource="#Outcome"/>
+  <owl:disjointWith rdf:resource="#NotFix"/>
+</owl:Class>
+
+<owl:Class rdf:about="#NotFix">
+  <rdfs:subClassOf rdf:resource="#Outcome"/>
+</owl:Class>
+
+<owl:Class rdf:about="#InductionTube">
+  <rdfs:subClassOf rdf:resource="#Part"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Leak">
+  <rdfs:subClassOf rdf:resource="#Problem"/>
+</owl:Class>
+
+<owl:Class rdf:about="#LeftEngine">
+  <rdfs:subClassOf rdf:resource="#Part"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Loose">
+  <rdfs:subClassOf rdf:resource="#Problem"/>
+</owl:Class>
+
+<owl:Class rdf:about="#RightEngine">
+  <rdfs:subClassOf rdf:resource="#Part"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Screw">
+  <rdfs:subClassOf rdf:resource="#Part"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ScrewDriver">
+  <rdfs:subClassOf rdf:resource="#Tool"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Shear">
+  <rdfs:subClassOf rdf:resource="#Problem"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Torn">
+  <rdfs:subClassOf rdf:resource="#Problem"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Wear">
+  <rdfs:subClassOf rdf:resource="#Problem"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Worn">
+  <rdfs:subClassOf rdf:resource="#Problem"/>
+</owl:Class>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#Broken"/>
+    <rdf:Description rdf:about="#Crack"/>
+    <rdf:Description rdf:about="#Damaged"/>
+    <rdf:Description rdf:about="#Dirty"/>
+    <rdf:Description rdf:about="#Leak"/>
+    <rdf:Description rdf:about="#Loose"/>
+    <rdf:Description rdf:about="#Shear"/>
+    <rdf:Description rdf:about="#Torn"/>
+    <rdf:Description rdf:about="#Wear"/>
+    <rdf:Description rdf:about="#Worn"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#Baffle"/>
+    <rdf:Description rdf:about="#InductionTube"/>
+    <rdf:Description rdf:about="#Intake"/>
+    <rdf:Description rdf:about="#RockerCover"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+
+</rdf:RDF>
